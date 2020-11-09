@@ -2,13 +2,16 @@
   import type { Comic } from './images'
   import { routes } from './routes'
   import { historyStore } from './stores/historyStore'
+  import Link from './ui/Link.svelte'
 
   export let comic: Comic
 
-  let image = 0
-  $: src = comic[image]
+  $: [title, images] = comic
 
-  $: canGoNext = image < comic.length - 1
+  let image = 0
+  $: src = images[image]
+
+  $: canGoNext = image < images.length - 1
   $: canGoPrevious = 0 < image
 
   const goNext = () => {
@@ -38,15 +41,37 @@
 </script>
 
 <style>
-  .container {
+  div.container {
     width: 100vw;
     height: 100vh;
     position: absolute;
     top: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0.9);
+    padding: 8px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  h1 {
+    margin-bottom: 0;
+  }
+
+  p.subtitle {
+    margin-top: 0.33em;
+  }
+
+  hr {
+    width: 100%;
+  }
+
+  div.content {
+    flex-grow: 1;
     display: flex;
     align-items: center;
+    position: relative;
+    overflow: hidden;
   }
 
   img {
@@ -73,21 +98,25 @@
   button.hidden {
     visibility: hidden;
   }
-
-  button.close {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-  }
 </style>
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div on:click={goNext} on:contextmenu={withPreventDefault(goPrevious)} class="container">
-  <img alt={src} {src} />
-  <nav>
-    <button on:click={withStopPropagation(goPrevious)} class:hidden={!canGoPrevious}>&lt;</button>
-    <button on:click={withStopPropagation(goNext)} class:hidden={!canGoNext}>&gt;</button>
-  </nav>
-  <button on:click={closePlayer} class="close">X</button>
+<div class="container">
+  <header>
+    <h1>{title}</h1>
+    <p class="subtitle">
+      <Link to={routes.home}>retour</Link>
+    </p>
+  </header>
+
+  <hr />
+
+  <div class="content">
+    <img alt={src} {src} on:click={goNext} on:contextmenu={withPreventDefault(goPrevious)} />
+    <nav>
+      <button on:click={withStopPropagation(goPrevious)} class:hidden={!canGoPrevious}>&lt;</button>
+      <button on:click={withStopPropagation(goNext)} class:hidden={!canGoNext}>&gt;</button>
+    </nav>
+  </div>
 </div>

@@ -34,8 +34,10 @@
 </style>
 
 <main>
-  <h1>Odolf Hitman</h1>
-  <p class="subtitle">Assassin humaniste.</p>
+  <header>
+    <h1>Odolf Hitman</h1>
+    <p class="subtitle">Assassin humaniste.</p>
+  </header>
 
   <hr />
 

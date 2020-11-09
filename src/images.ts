@@ -1,6 +1,6 @@
-export type Comic = string[]
+export type Comic = [string, string[]]
 
-const ohGenesis: [string, Comic] = [
+const ohGenesis: Comic = [
   'Odolf Hitman: Genesis',
   [
     'img/oh-genesis/1.jpg',

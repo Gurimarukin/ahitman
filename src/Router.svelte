@@ -6,7 +6,7 @@
 
   import Player from './Player.svelte'
 
-  $: comic = ((): [string, Comic] | null => {
+  $: comic = ((): Comic | null => {
     const { hash } = $historyStore.location
 
     if (hash === routes.ohGenesis) return images.ohGenesis
@@ -16,5 +16,5 @@
 </script>
 
 {#if comic !== null}
-  <Player comic={comic[1]} />
+  <Player {comic} />
 {/if}

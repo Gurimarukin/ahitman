@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Comic } from './images'
+  import { routes } from './routes'
   import { historyStore } from './stores/historyStore'
 
   export let comic: Comic
@@ -18,9 +19,19 @@
   }
 
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') $historyStore.navigate({ hash: '' })
+    if (event.key === 'Escape') $historyStore.navigate(routes.home)
     else if (event.key === 'ArrowLeft') goPrevious()
     else if (event.key === 'ArrowRight') goNext()
+  }
+
+  const withStopPropagation = <E extends Event>(f: (e: E) => void) => (event: E) => {
+    event.stopPropagation()
+    f(event)
+  }
+
+  const withPreventDefault = <E extends Event>(f: (e: E) => void) => (event: E) => {
+    event.preventDefault()
+    f(event)
   }
 </script>
 
@@ -65,10 +76,10 @@
 
 <svelte:window on:keydown={handleKeydown} />
 
-<div class="container">
+<div on:click={goNext} on:contextmenu={withPreventDefault(goPrevious)} class="container">
   <img alt={src} {src} />
   <nav>
-    <button on:click={goPrevious} class:visible={canGoPrevious}>&lt;</button>
-    <button on:click={goNext} class:visible={canGoNext}>&gt;</button>
+    <button on:click={withStopPropagation(goPrevious)} class:visible={canGoPrevious}>&lt;</button>
+    <button on:click={withStopPropagation(goNext)} class:visible={canGoNext}>&gt;</button>
   </nav>
 </div>

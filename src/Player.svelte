@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { Comic } from './images'
+  import { historyStore } from './stores/historyStore'
 
   export let comic: Comic
 
@@ -9,8 +10,18 @@
   $: canGoNext = image < comic.length - 1
   $: canGoPrevious = 0 < image
 
-  const goNext = () => (canGoNext ? (image += 1) : undefined)
-  const goPrevious = () => (canGoPrevious ? (image -= 1) : undefined)
+  const goNext = () => {
+    if (canGoNext) image += 1
+  }
+  const goPrevious = () => {
+    if (canGoPrevious) image -= 1
+  }
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') $historyStore.navigate({ hash: '' })
+    else if (event.key === 'ArrowLeft') goPrevious()
+    else if (event.key === 'ArrowRight') goNext()
+  }
 </script>
 
 <style>
@@ -51,6 +62,8 @@
     visibility: visible;
   }
 </style>
+
+<svelte:window on:keydown={handleKeydown} />
 
 <div class="container">
   <img alt={src} {src} />

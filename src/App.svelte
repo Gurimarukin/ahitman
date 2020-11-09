@@ -3,26 +3,7 @@
 
   import Router from './Router.svelte'
   import Link from './ui/Link.svelte'
-
-  // import { images } from './images'
 </script>
-
-<style>
-  /* .images {
-    margin-bottom: 24px;
-  } */
-
-  /* img {
-    display: block;
-    max-height: 500px;
-    max-width: 500px;
-    border: 1px solid black;
-  } */
-
-  /* img + img {
-    margin-top: 12px;
-  } */
-</style>
 
 <main>
   <h1>Odolf Hitman</h1>
@@ -32,9 +13,6 @@
 
   <h3>Odolf Hitman: Genesis</h3>
   <Link to={routes.ohGenesis}>lire...</Link>
-  <!-- <div class="images">
-    {#each images.ohGenesis as image (image)}<img alt={image} src={image} />{/each}
-  </div> -->
 
   <Router />
 </main>

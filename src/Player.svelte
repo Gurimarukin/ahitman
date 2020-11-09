@@ -18,8 +18,10 @@
     if (canGoPrevious) image -= 1
   }
 
+  const closePlayer = () => $historyStore.navigate(routes.home)
+
   const handleKeydown = (event: KeyboardEvent) => {
-    if (event.key === 'Escape') $historyStore.navigate(routes.home)
+    if (event.key === 'Escape') closePlayer()
     else if (event.key === 'ArrowLeft') goPrevious()
     else if (event.key === 'ArrowRight') goNext()
   }
@@ -66,11 +68,16 @@
     margin: 0;
     font-size: 14px;
     cursor: pointer;
+  }
+
+  button.hidden {
     visibility: hidden;
   }
 
-  button.visible {
-    visibility: visible;
+  button.close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
   }
 </style>
 
@@ -79,7 +86,8 @@
 <div on:click={goNext} on:contextmenu={withPreventDefault(goPrevious)} class="container">
   <img alt={src} {src} />
   <nav>
-    <button on:click={withStopPropagation(goPrevious)} class:visible={canGoPrevious}>&lt;</button>
-    <button on:click={withStopPropagation(goNext)} class:visible={canGoNext}>&gt;</button>
+    <button on:click={withStopPropagation(goPrevious)} class:hidden={!canGoPrevious}>&lt;</button>
+    <button on:click={withStopPropagation(goNext)} class:hidden={!canGoNext}>&gt;</button>
   </nav>
+  <button on:click={closePlayer} class="close">X</button>
 </div>

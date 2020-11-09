@@ -1,4 +1,9 @@
 <script lang="ts">
+  import { routes } from './routes'
+
+  import Router from './Router.svelte'
+  import Link from './ui/Link.svelte'
+
   // import { images } from './images'
 </script>
 
@@ -25,9 +30,11 @@
 
   <hr />
 
-  <h2>Odolf Hitman: Genesis</h2>
-  <a href="#oh-genesis">lire...</a>
+  <h3>Odolf Hitman: Genesis</h3>
+  <Link to={routes.ohGenesis}>lire...</Link>
   <!-- <div class="images">
     {#each images.ohGenesis as image (image)}<img alt={image} src={image} />{/each}
   </div> -->
+
+  <Router />
 </main>

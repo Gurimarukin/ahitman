@@ -1,4 +1,4 @@
-type Comic = string[]
+export type Comic = string[]
 
 const ohGenesis: Comic = [
   '/img/oh-genesis/1.jpg',
